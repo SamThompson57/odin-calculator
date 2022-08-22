@@ -1,0 +1,34 @@
+#Calculator{
+    border: solid 5px black;
+    margin: auto;
+    text-align: center;
+    width: 600px;
+    height: 750px;
+    font-size: 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.row{
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+}
+
+button{
+    flex: 1;
+    font-size: 32px;
+}
+
+#equals{
+    flex: 2.12;
+}
+
+#disp{
+    flex-direction: column;
+    text-align: end;
+}
+
+#topDisplay{
+    font-size: 18px;
+}
