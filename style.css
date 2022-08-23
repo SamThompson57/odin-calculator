@@ -20,7 +20,8 @@ button{
     font-size: 32px;
 }
 
-#equals{
+#zero,
+#clear{
     flex: 2.12;
 }
 
