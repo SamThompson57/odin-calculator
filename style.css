@@ -18,6 +18,19 @@
 button{
     flex: 1;
     font-size: 32px;
+    background-color: aqua;
+    
+}
+
+button:hover{
+    filter: brightness(85%);
+}
+
+.illegalInput{
+    filter: brightness(30%);
+}
+.illegalInput:hover{
+    filter: brightness(30%);
 }
 
 #zero,
@@ -32,4 +45,24 @@ button{
 
 #topDisplay{
     font-size: 18px;
+}
+
+#disp{
+    background-color: gainsboro;
+}
+
+#divide,
+#times,
+#minus,
+#plus{
+    background-color: orangered;
+}
+
+#clear,
+#del{
+    background-color: brown;
+}
+
+#equals{
+    background-color: greenyellow;
 }
