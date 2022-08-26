@@ -47,21 +47,35 @@ const equals = document.querySelector('#equals')
 const clear = document.querySelector('#clear');
 const del = document.querySelector('#del')
 
+
 Array.from(inputs).forEach(function(input){
     input.addEventListener('click', function(){
+        if (this.id == 'point' && lastContainsPoint()){
+            return       
+        }
+        if (this.id == 'minus' && dispBot.textContent.slice(-1)== false){
+            dispBot.textContent += this.textContent.toString().trim()
+            return
+        }else if((this.id == 'plus'|| this.id == 'times' || this.id == "divide")&&
+        (dispBot.textContent.toString().slice(-3,-2) === ' ' && dispBot.textContent.toString().slice(-1) === ' ')){
+            console.log("operator already exists. replaceing")
+            dispBot.textContent = dispBot.textContent.toString().slice(0,-3)
+        } 
         dispBot.textContent += this.textContent;
     })
 })
-
-clear.addEventListener('click', function(){
+function clearAll(){
     dispBot.textContent = '';
     dispTop.textContent = '';
+}
+clear.addEventListener('click', function(){
+    clearAll()
 })
-
-del.addEventListener('click',function(){
+//DEL FUNCTION
+function delPress(){
     console.log("del pressed")
-    dispTop.textContent = '';
     let holder = dispBot.textContent.toString();
+    
     if(holder.slice(-3,-2) === ' ' && holder.slice(-1) === ' '){
         dispBot.textContent = holder.slice(0,-3)
         return
@@ -69,11 +83,56 @@ del.addEventListener('click',function(){
     else{
         dispBot.textContent = holder.slice(0,-1)
     }
-    
+}
+del.addEventListener('click',function(){
+  delPress()
 })
 
 //EQUALS FUNCTION INCLUDING BODMAS
-equals.addEventListener('click', function(){
+equals.addEventListener('click', function (){
+    argEquals()
+})
+// Dividing by Zero
+
+function div0(){
+    dispTop.textContent = "You done fucked up now";
+    dispBot.textContent = "NO DIVIDING BY 0"
+}
+
+function lastContainsPoint(){
+    let elements = dispBot.textContent.split(' ');
+    let lastElement = elements[elements.length-1];
+    let lastElementElements = lastElement.split('');
+    if (lastElementElements.includes('.')){
+        return true
+    } else {return false;}
+}
+
+//Keyboard entrys
+
+window.addEventListener('keydown', function(input){
+    const key = document.querySelector(`button[data-key="${input.keyCode}"]`)
+    console.log(key.className)
+    if (key.id == 'equals'){argEquals()} 
+    if (key.id == 'del') {delPress()}
+    if (key.id == 'clear'){clearAll()}
+    if(key.className !=="input"){return} 
+    if (key.id == 'point' && lastContainsPoint()){
+            return       
+        }
+        if (key.id == 'minus' && dispBot.textContent.slice(-1)== false){
+            dispBot.textContent += key.textContent.toString().trim()
+            return
+        }else if((key.id == 'plus'|| key.id == 'times' || key.id == "divide")&&
+        (dispBot.textContent.toString().slice(-3,-2) === ' ' && dispBot.textContent.toString().slice(-1) === ' ')){
+            console.log("operator already exists. replaceing")
+            dispBot.textContent = dispBot.textContent.toString().slice(0,-3)
+        } 
+        dispBot.textContent += key.textContent;
+})
+
+//Equals function
+function argEquals(){
     let elements = dispBot.textContent.split(' ')
     while(elements.length > 1){
         console.log(elements)
@@ -123,17 +182,15 @@ equals.addEventListener('click', function(){
 
     }
 
-   
-        
-
     console.log(elements)
+    let answer = parseFloat(elements[0]);
+    console.log(`${answer} ${typeof answer}`)
+    if(answer.toString().split('').includes('.') && answer.toString().length > 10){
+        console.log("Shortening Answer")
+        answer = answer.toFixed(5);
+    }
+
 
     dispTop.textContent = dispBot.textContent;
-    dispBot.textContent = elements[0]
-    
-})
-
-function div0(){
-    dispTop.textContent = "You done fucked up now";
-    dispBot.textContent = "NO DIVIDING BY 0"
+    dispBot.textContent = answer
 }
